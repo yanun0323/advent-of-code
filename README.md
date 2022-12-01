@@ -17,7 +17,9 @@ $ cp ./config.yaml.sample ./config.yaml
 
 ```bash
 $ DAY={day} make run 
-# example: 
+# example:
 # DAY=1 make run
-# program will try to run func Day1A() and Day1B()
+# 
+# program will get the data from url "`url.prefix` + 1 + `url.suffix`""
+# and try to run func Day1A() and Day1B()
 ```
