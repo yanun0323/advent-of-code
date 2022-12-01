@@ -16,5 +16,8 @@ $ cp ./config.yaml.sample ./config.yaml
 #### Run Code
 
 ```bash
-$ DAY={day} make run  #example: DAY=1 make run
+$ DAY={day} make run 
+# example: 
+# DAY=1 make run
+# program will try to run func Day1A() and Day1B()
 ```
