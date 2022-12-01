@@ -27,6 +27,7 @@ func (svc Service) Run() {
 	body, err := svc.repo.GetQuestion()
 	if err != nil {
 		svc.l.Errorf("get day failed, %+v", err)
+		return
 	}
 	svc.invoke("Day"+os.Getenv("DAY")+"A", body)
 	svc.invoke("Day"+os.Getenv("DAY")+"B", body)
