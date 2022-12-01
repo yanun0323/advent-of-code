@@ -15,14 +15,6 @@ $ cp ./config.yaml.sample ./config.yaml
 
 #### Run Code
 
-- change the function `Run()` in `./internal/service/svc.go` to execute different day functions. 
-
 ```bash
-$ DAY={day} make run
-```
-{day} will combine `url.prefix` and `url.suffix` into an url to get the input from http://adventofcode.com
-
-#### example
-```bash
-$ DAY=1 make run
+$ DAY={day} make run  #example: DAY=1 make run
 ```
