@@ -1,0 +1,4 @@
+session: "123456789123456789"
+url: 
+  prefix: "https://adventofcode.com/2022/day/"
+  suffix: "/input"
