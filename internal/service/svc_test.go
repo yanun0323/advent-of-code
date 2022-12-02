@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"main/infra"
 	"main/internal/repository"
 	"testing"
 
@@ -14,9 +13,8 @@ type ServiceSuite struct {
 	Service
 }
 
-func (su *ServiceSuite) SetupSuit() {
+func (su *ServiceSuite) SetupTest() {
 	su.ctx = context.Background()
-	su.Require().Nil(infra.Init("cocnfig"))
 	repo := repository.New()
 	su.Service = New(su.ctx, repo)
 }

@@ -17,7 +17,7 @@ type Service struct {
 
 func New(ctx context.Context, repo repository.Repo) Service {
 	return Service{
-		l:    logs.Get(ctx),
+		l:    logs.New("advent of code", 2),
 		ctx:  ctx,
 		repo: repo,
 	}
