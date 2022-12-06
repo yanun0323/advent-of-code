@@ -10,7 +10,7 @@ https://adventofcode.com
 ```bash
 $ cp ./config.yaml.sample ./config.yaml
 ```
-- Then add your browser session into `config.yaml`
+- Also, add your browser session into `config.yaml`
 
 
 #### Run Code
@@ -20,6 +20,6 @@ $ DAY={day} make run
 # example:
 # DAY=1 make run
 # 
-# program will get the data from url "`url.prefix` + 1 + `url.suffix`""
+# program will get the puzzle input from url "`url.prefix` + 1 + `url.suffix`""
 # and try to run func Day1A() and Day1B()
 ```
