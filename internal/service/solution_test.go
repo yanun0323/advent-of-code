@@ -8,17 +8,17 @@ import (
 	"github.com/stretchr/testify/suite"
 )
 
-type ServiceSuite struct {
+type SolutionSuite struct {
 	suite.Suite
-	Service
+	Solution
 }
 
-func (su *ServiceSuite) SetupTest() {
+func (su *SolutionSuite) SetupTest() {
 	su.ctx = context.Background()
 	repo := repository.New()
-	su.Service = New(su.ctx, repo)
+	su.Solution = New(su.ctx, repo)
 }
 
 func TestSuite(t *testing.T) {
-	suite.Run(t, new(ServiceSuite))
+	suite.Run(t, new(SolutionSuite))
 }

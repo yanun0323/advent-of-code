@@ -9,21 +9,21 @@ import (
 	"github.com/yanun0323/pkg/logs"
 )
 
-type Service struct {
+type Solution struct {
 	l    *logs.Logger
 	ctx  context.Context
 	repo repository.Repo
 }
 
-func New(ctx context.Context, repo repository.Repo) Service {
-	return Service{
+func New(ctx context.Context, repo repository.Repo) Solution {
+	return Solution{
 		l:    logs.New("advent of code", 2),
 		ctx:  ctx,
 		repo: repo,
 	}
 }
 
-func (svc Service) Run() {
+func (svc Solution) Run() {
 	body, err := svc.repo.GetQuestion()
 	if err != nil {
 		svc.l.Errorf("get day failed, %+v", err)
@@ -33,7 +33,7 @@ func (svc Service) Run() {
 	svc.invoke("Day"+os.Getenv("DAY")+"B", body)
 }
 
-func (svc Service) invoke(funcName string, args ...any) {
+func (svc Solution) invoke(funcName string, args ...any) {
 	method, ok := reflect.TypeOf(svc).MethodByName(funcName)
 	if !ok {
 		svc.l.Warnf("can't find function %s", funcName)

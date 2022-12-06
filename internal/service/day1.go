@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func (svc Service) Day1A(calories []string) any {
+func (s Solution) Day1A(calories []string) any {
 	max := 0
 	temp := 0
 	for _, calory := range calories {
@@ -18,7 +18,7 @@ func (svc Service) Day1A(calories []string) any {
 		}
 		num, err := strconv.Atoi(calory)
 		if err != nil {
-			svc.l.Errorf("convert string %s failed, %+v", calory, err)
+			s.l.Errorf("convert string %s failed, %+v", calory, err)
 			return nil
 		}
 		temp += num
@@ -27,8 +27,8 @@ func (svc Service) Day1A(calories []string) any {
 	return max
 }
 
-func (svc Service) Day1B(calories []string) any {
-	h := &Heap2022Day1{}
+func (s Solution) Day1B(calories []string) any {
+	h := &Day1Heap{}
 	heap.Init(h)
 
 	carried := 0
@@ -40,7 +40,7 @@ func (svc Service) Day1B(calories []string) any {
 		}
 		num, err := strconv.Atoi(calory)
 		if err != nil {
-			svc.l.Errorf("convert string %s failed, %+v", calory, err)
+			s.l.Errorf("convert string %s failed, %+v", calory, err)
 			return nil
 		}
 		carried += num
@@ -57,23 +57,23 @@ func (svc Service) Day1B(calories []string) any {
 	return sum
 }
 
-type Heap2022Day1 struct {
+type Day1Heap struct {
 	calory []int
 }
 
-func (h *Heap2022Day1) Len() int {
+func (h *Day1Heap) Len() int {
 	return len(h.calory)
 }
-func (h *Heap2022Day1) Less(i, j int) bool {
+func (h *Day1Heap) Less(i, j int) bool {
 	return h.calory[i] > h.calory[j]
 }
-func (h *Heap2022Day1) Swap(i, j int) {
+func (h *Day1Heap) Swap(i, j int) {
 	h.calory[i], h.calory[j] = h.calory[j], h.calory[i]
 }
-func (h *Heap2022Day1) Push(x interface{}) {
+func (h *Day1Heap) Push(x interface{}) {
 	h.calory = append(h.calory, x.(int))
 }
-func (h *Heap2022Day1) Pop() interface{} {
+func (h *Day1Heap) Pop() interface{} {
 	x := h.calory[h.Len()-1]
 	h.calory = h.calory[:h.Len()-1]
 	return x
