@@ -38,18 +38,6 @@ func day2GetPairScore(opponent, player string) int {
 	return 0
 }
 
-func day2GetChosenScore(char string) int {
-	switch char {
-	case "X":
-		return 1
-	case "Y":
-		return 2
-	case "Z":
-		return 3
-	}
-	return 0
-}
-
 func (s Solution) Day2B(inputs []string) any {
 	score := 0
 	for _, s := range inputs {
