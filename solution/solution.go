@@ -29,7 +29,9 @@ func (svc Solution) Run() {
 		svc.l.Errorf("empty puzzle input")
 		return
 	}
-	svc.invoke("Day"+os.Getenv("DAY"), body)
+	day := "Day" + os.Getenv("DAY")
+	svc.l.Info("--- ", day, " ---")
+	svc.invoke(day, body)
 }
 
 func (svc Solution) invoke(funcName string, args ...any) {
@@ -45,9 +47,20 @@ func (svc Solution) invoke(funcName string, args ...any) {
 		inputs = append(inputs, reflect.ValueOf(args[i]))
 	}
 	ans := method.Func.Call(inputs)
-	if len(ans) == 0 || ans[0].IsNil() {
-		svc.l.Warn("nil answer from function %s", funcName)
+	if len(ans) < 2 {
+		svc.l.Error("mismatch ans count")
 		return
 	}
-	svc.l.Info("function ", funcName, " executed, answer is ", ans[0].Interface())
+
+	if ans[0].IsNil() {
+		svc.l.Info("Puzzle A Answer: -- ")
+	} else {
+		svc.l.Info("Puzzle A Answer: ", ans[0].Interface())
+	}
+
+	if ans[1].IsNil() {
+		svc.l.Info("Puzzle B Answer: -- ")
+	} else {
+		svc.l.Info("Puzzle B Answer: ", ans[0].Interface())
+	}
 }
