@@ -1,6 +1,15 @@
-package service
+package solution
 
-func (s Solution) Day6A(inputs []string) any {
+type Day6 struct {
+	Solution
+}
+
+func (s Solution) Day6(inputs []string) (any, any) {
+	d := Day6{s}
+	return d.PuzzleA(inputs), d.PuzzleB(inputs)
+}
+
+func (d Day6) PuzzleA(inputs []string) any {
 	input := inputs[0]
 	m := map[byte]int{}
 	q := make([]byte, 0, 4)
@@ -25,7 +34,7 @@ func (s Solution) Day6A(inputs []string) any {
 	return 0
 }
 
-func (s Solution) Day6B(inputs []string) any {
+func (d Day6) PuzzleB(inputs []string) any {
 	input := inputs[0]
 	m := map[byte]int{}
 	q := make([]byte, 0, 14)

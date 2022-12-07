@@ -22,25 +22,25 @@ func New() Repo {
 	}
 }
 
-func (repo *repo) GetQuestion() ([]string, error) {
+func (repo *repo) GetPuzzleInput() []string {
 	url := viper.GetString("url.prefix") + os.Getenv("DAY") + viper.GetString("url.suffix")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		return nil, err
+		return nil
 	}
 	req.Header.Add("Cookie", "session="+viper.GetString("session"))
 	req.Header.Add("Content-Type", "application/json")
 
 	response, err := repo.client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil
 	}
 	defer response.Body.Close()
 
 	buf, err := io.ReadAll(response.Body)
 	if err != nil {
-		return nil, err
+		return nil
 	}
 
-	return strings.Split(string(buf), "\n"), nil
+	return strings.Split(string(buf), "\n")
 }

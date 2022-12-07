@@ -1,11 +1,20 @@
-package service
+package solution
 
 import (
 	"container/heap"
 	"strconv"
 )
 
-func (s Solution) Day1A(calories []string) any {
+type Day1 struct {
+	Solution
+}
+
+func (s Solution) Day1(inputs []string) (any, any) {
+	d := Day1{s}
+	return d.PuzzleA(inputs), d.PuzzleB(inputs)
+}
+
+func (d Day1) PuzzleA(calories []string) any {
 	max := 0
 	temp := 0
 	for _, calory := range calories {
@@ -18,7 +27,7 @@ func (s Solution) Day1A(calories []string) any {
 		}
 		num, err := strconv.Atoi(calory)
 		if err != nil {
-			s.l.Errorf("convert string %s failed, %+v", calory, err)
+			d.l.Errorf("convert string %s failed, %+v", calory, err)
 			return nil
 		}
 		temp += num
@@ -27,7 +36,7 @@ func (s Solution) Day1A(calories []string) any {
 	return max
 }
 
-func (s Solution) Day1B(calories []string) any {
+func (d Day1) PuzzleB(calories []string) any {
 	h := &Day1Heap{}
 	heap.Init(h)
 
@@ -40,7 +49,7 @@ func (s Solution) Day1B(calories []string) any {
 		}
 		num, err := strconv.Atoi(calory)
 		if err != nil {
-			s.l.Errorf("convert string %s failed, %+v", calory, err)
+			d.l.Errorf("convert string %s failed, %+v", calory, err)
 			return nil
 		}
 		carried += num

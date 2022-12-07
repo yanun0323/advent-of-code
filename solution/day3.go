@@ -1,6 +1,15 @@
-package service
+package solution
 
-func (s Solution) Day3A(inputs []string) any {
+type Day3 struct {
+	Solution
+}
+
+func (s Solution) Day3(inputs []string) (any, any) {
+	d := Day3{s}
+	return d.PuzzleA(inputs), d.PuzzleB(inputs)
+}
+
+func (d Day3) PuzzleA(inputs []string) any {
 	sum := 0
 	for _, input := range inputs {
 		count := len(input)
@@ -10,7 +19,7 @@ func (s Solution) Day3A(inputs []string) any {
 		}
 		for i := count / 2; i < count; i++ {
 			if m[input[i]] {
-				sum += day3GetScore(input[i])
+				sum += d.getScore(input[i])
 				break
 			}
 		}
@@ -18,14 +27,7 @@ func (s Solution) Day3A(inputs []string) any {
 	return sum
 }
 
-func day3GetScore(char byte) int {
-	if char >= 'a' && char <= 'z' {
-		return int(char - 'a' + 1)
-	}
-	return int(char - 'A' + 27)
-}
-
-func (s Solution) Day3B(inputs []string) any {
+func (d Day3) PuzzleB(inputs []string) any {
 	m := map[byte]int{}
 	count := len(inputs)
 	if count > 3 {
@@ -36,7 +38,7 @@ func (s Solution) Day3B(inputs []string) any {
 	for i := 0; i < count; i++ {
 		for j := range inputs[i] {
 			if i == last && m[inputs[i][j]] == i {
-				sum += day3GetScore(inputs[i][j])
+				sum += d.getScore(inputs[i][j])
 				break
 			}
 			if m[inputs[i][j]] == i {
@@ -45,7 +47,14 @@ func (s Solution) Day3B(inputs []string) any {
 		}
 	}
 	if len(inputs) > 3 {
-		return sum + s.Day3B(inputs[3:]).(int)
+		return sum + d.PuzzleB(inputs[3:]).(int)
 	}
 	return sum
+}
+
+func (d Day3) getScore(char byte) int {
+	if char >= 'a' && char <= 'z' {
+		return int(char - 'a' + 1)
+	}
+	return int(char - 'A' + 27)
 }

@@ -1,14 +1,23 @@
-package service
+package solution
 
 import (
-	"main/internal/util"
+	"main/util"
 	"strconv"
 	"strings"
 )
 
-func (s Solution) Day5A(inputs []string) any {
-	cratesStr, commands := day5SeparateInputs(inputs)
-	crates, lastNum := day5ParseCrates(cratesStr)
+type Day5 struct {
+	Solution
+}
+
+func (s Solution) Day5(inputs []string) (any, any) {
+	d := Day5{s}
+	return d.PuzzleA(inputs), d.PuzzleB(inputs)
+}
+
+func (d Day5) PuzzleA(inputs []string) any {
+	cratesStr, commands := d.separateInputs(inputs)
+	crates, lastNum := d.parseCrates(cratesStr)
 
 	for _, cmd := range commands {
 		crates.ExecuteCommandA(cmd)
@@ -24,9 +33,9 @@ func (s Solution) Day5A(inputs []string) any {
 	return string(ans)
 }
 
-func (s Solution) Day5B(inputs []string) any {
-	cratesStr, commands := day5SeparateInputs(inputs)
-	crates, lastNum := day5ParseCrates(cratesStr)
+func (d Day5) PuzzleB(inputs []string) any {
+	cratesStr, commands := d.separateInputs(inputs)
+	crates, lastNum := d.parseCrates(cratesStr)
 
 	for _, cmd := range commands {
 		crates.ExecuteCommandB(cmd)
@@ -42,7 +51,7 @@ func (s Solution) Day5B(inputs []string) any {
 	return string(ans)
 }
 
-func day5SeparateInputs(inputs []string) ([]string, []string) {
+func (d Day5) separateInputs(inputs []string) ([]string, []string) {
 	for i := range inputs {
 		if len(inputs[i]) == 0 {
 			return inputs[:i], inputs[i+1:]
@@ -51,7 +60,7 @@ func day5SeparateInputs(inputs []string) ([]string, []string) {
 	return inputs, nil
 }
 
-func day5ParseCrates(ss []string) (Day5Crates, byte) {
+func (d Day5) parseCrates(ss []string) (Day5Crates, byte) {
 	crates := Day5Crates{}
 	num := map[int]byte{}
 	numRow := ss[len(ss)-1]

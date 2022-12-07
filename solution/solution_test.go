@@ -1,8 +1,8 @@
-package service
+package solution
 
 import (
 	"context"
-	"main/internal/repository"
+	"main/repository"
 	"testing"
 
 	"github.com/stretchr/testify/suite"

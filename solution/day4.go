@@ -1,11 +1,20 @@
-package service
+package solution
 
 import (
 	"strconv"
 	"strings"
 )
 
-func (s Solution) Day4A(inputs []string) any {
+type Day4 struct {
+	Solution
+}
+
+func (s Solution) Day4(inputs []string) (any, any) {
+	d := Day4{s}
+	return d.PuzzleA(inputs), d.PuzzleB(inputs)
+}
+
+func (d Day4) PuzzleA(inputs []string) any {
 	ans := 0
 	for _, input := range inputs {
 		str := strings.Split(input, ",")
@@ -16,14 +25,14 @@ func (s Solution) Day4A(inputs []string) any {
 				num = append(num, n)
 			}
 		}
-		if day4IsFullyContain(num) {
+		if d.isFullyContain(num) {
 			ans++
 		}
 	}
 	return ans
 }
 
-func (s Solution) Day4B(inputs []string) any {
+func (d Day4) PuzzleB(inputs []string) any {
 	ans := 0
 	for _, input := range inputs {
 		str := strings.Split(input, ",")
@@ -34,21 +43,21 @@ func (s Solution) Day4B(inputs []string) any {
 				num = append(num, n)
 			}
 		}
-		if day4IsOverlapping(num) {
+		if d.isOverlapping(num) {
 			ans++
 		}
 	}
 	return ans
 }
 
-func day4IsFullyContain(num []int) bool {
+func (d Day4) isFullyContain(num []int) bool {
 	if len(num) < 4 {
 		return false
 	}
 	return (num[0] >= num[2] && num[1] <= num[3]) || (num[0] <= num[2] && num[1] >= num[3])
 }
 
-func day4IsOverlapping(num []int) bool {
+func (d Day4) isOverlapping(num []int) bool {
 	if len(num) < 4 {
 		return false
 	}

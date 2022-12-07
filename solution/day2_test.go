@@ -1,4 +1,4 @@
-package service
+package solution
 
 var (
 	_inputDay2 = `A Y
@@ -8,6 +8,7 @@ C Z`
 
 func (su SolutionSuite) TestDay2() {
 	inputs := getInputs(_inputDay2)
-	su.Equal(15, su.Day2A(inputs))
-	su.Equal(12, su.Day2B(inputs))
+	d := Day2{su.Solution}
+	su.Equal(15, d.PuzzleA(inputs))
+	su.Equal(12, d.PuzzleB(inputs))
 }

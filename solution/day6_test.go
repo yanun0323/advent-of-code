@@ -1,4 +1,4 @@
-package service
+package solution
 
 var _inputDay6A = map[int]string{
 	5:  "bvwbjplbgvbhsrlpgdmjqwftvncz",
@@ -14,10 +14,11 @@ var _inputDay6B = map[int]string{
 }
 
 func (su SolutionSuite) TestDay6() {
+	d := Day6{su.Solution}
 	for ans, input := range _inputDay6A {
-		su.Equal(ans, su.Day6A([]string{input}))
+		su.Equal(ans, d.PuzzleA([]string{input}))
 	}
 	for ans, input := range _inputDay6B {
-		su.Equal(ans, su.Day6B([]string{input}))
+		su.Equal(ans, d.PuzzleB([]string{input}))
 	}
 }

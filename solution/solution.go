@@ -1,8 +1,8 @@
-package service
+package solution
 
 import (
 	"context"
-	"main/internal/repository"
+	"main/repository"
 	"os"
 	"reflect"
 
@@ -24,13 +24,12 @@ func New(ctx context.Context, repo repository.Repo) Solution {
 }
 
 func (svc Solution) Run() {
-	body, err := svc.repo.GetQuestion()
-	if err != nil {
-		svc.l.Errorf("get day failed, %+v", err)
+	body := svc.repo.GetPuzzleInput()
+	if len(body) == 0 {
+		svc.l.Errorf("empty puzzle input")
 		return
 	}
-	svc.invoke("Day"+os.Getenv("DAY")+"A", body)
-	svc.invoke("Day"+os.Getenv("DAY")+"B", body)
+	svc.invoke("Day"+os.Getenv("DAY"), body)
 }
 
 func (svc Solution) invoke(funcName string, args ...any) {

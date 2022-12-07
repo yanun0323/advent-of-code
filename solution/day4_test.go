@@ -1,4 +1,4 @@
-package service
+package solution
 
 var _inputDay4 = `2-4,6-8
 2-3,4-5
@@ -9,6 +9,7 @@ var _inputDay4 = `2-4,6-8
 
 func (su SolutionSuite) TestDay4() {
 	inputs := getInputs(_inputDay4)
-	su.Equal(2, su.Day4A(inputs))
-	su.Equal(4, su.Day4B(inputs))
+	d := Day4{su.Solution}
+	su.Equal(2, d.PuzzleA(inputs))
+	su.Equal(4, d.PuzzleB(inputs))
 }

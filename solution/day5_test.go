@@ -1,4 +1,4 @@
-package service
+package solution
 
 var _inputDay5 = `    [D]    
 [N] [C]    
@@ -12,6 +12,7 @@ move 1 from 1 to 2`
 
 func (su SolutionSuite) TestDay5() {
 	inputs := getInputs(_inputDay5)
-	su.Equal("CMZ", su.Day5A(inputs))
-	su.Equal("MCD", su.Day5B(inputs))
+	d := Day5{su.Solution}
+	su.Equal("CMZ", d.PuzzleA(inputs))
+	su.Equal("MCD", d.PuzzleB(inputs))
 }

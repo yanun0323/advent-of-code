@@ -1,4 +1,4 @@
-package service
+package solution
 
 import (
 	"strings"
@@ -13,19 +13,41 @@ var (
 	_strategy = map[string]map[string]string{"X": _lose, "Y": _draw, "Z": _win}
 )
 
-func (s Solution) Day2A(inputs []string) any {
+type Day2 struct {
+	Solution
+}
+
+func (s Solution) Day2(inputs []string) (any, any) {
+	d := Day2{s}
+	return d.PuzzleA(inputs), d.PuzzleB(inputs)
+}
+
+func (d Day2) PuzzleA(inputs []string) any {
 	score := 0
 	for _, s := range inputs {
 		chars := strings.Split(s, " ")
 		if len(chars) != 2 {
 			continue
 		}
-		score += day2GetPairScore(chars[0], chars[1]) + _score[chars[1]]
+		score += d.getPairScore(chars[0], chars[1]) + _score[chars[1]]
 	}
 	return score
 }
 
-func day2GetPairScore(opponent, player string) int {
+func (d Day2) PuzzleB(inputs []string) any {
+	score := 0
+	for _, s := range inputs {
+		chars := strings.Split(s, " ")
+		if len(chars) != 2 {
+			continue
+		}
+		myShape := _strategy[chars[1]][chars[0]]
+		score += d.getPairScore(chars[0], myShape) + _score[myShape]
+	}
+	return score
+}
+
+func (d Day2) getPairScore(opponent, player string) int {
 	if _lose[opponent] == player {
 		return 0
 	}
@@ -36,17 +58,4 @@ func day2GetPairScore(opponent, player string) int {
 		return 6
 	}
 	return 0
-}
-
-func (s Solution) Day2B(inputs []string) any {
-	score := 0
-	for _, s := range inputs {
-		chars := strings.Split(s, " ")
-		if len(chars) != 2 {
-			continue
-		}
-		myShape := _strategy[chars[1]][chars[0]]
-		score += day2GetPairScore(chars[0], myShape) + _score[myShape]
-	}
-	return score
 }
