@@ -21,5 +21,5 @@ $ DAY={day} make run
 # DAY=1 make run
 # 
 # program will get the puzzle input from url "`url.prefix` + 1 + `url.suffix`""
-# and try to run func Day1A() and Day1B()
+# and try to run Solution method Day1()
 ```
