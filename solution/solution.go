@@ -53,14 +53,14 @@ func (svc Solution) invoke(funcName string, args ...any) {
 	}
 
 	if ans[0].IsNil() {
-		svc.l.Info("Puzzle A Answer: -- ")
+		svc.l.Info("Puzzle A: - ")
 	} else {
-		svc.l.Info("Puzzle A Answer: ", ans[0].Interface())
+		svc.l.Info("Puzzle A: ", ans[0].Interface())
 	}
 
 	if ans[1].IsNil() {
-		svc.l.Info("Puzzle B Answer: -- ")
+		svc.l.Info("Puzzle B: - ")
 	} else {
-		svc.l.Info("Puzzle B Answer: ", ans[0].Interface())
+		svc.l.Info("Puzzle B: ", ans[1].Interface())
 	}
 }
