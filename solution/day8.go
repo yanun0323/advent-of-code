@@ -1,5 +1,7 @@
 package solution
 
+import "github.com/yanun0323/gollection/v2"
+
 type Day8 struct {
 	Solution
 }
@@ -63,7 +65,7 @@ func (d Day8) PuzzleB(inputs []string) any {
 			scoreGrid[i][j] = 1
 		}
 	}
-	viewStack := Day8TreeStack{}
+	iteratorStack := gollection.NewStack()
 	var iterate func(r, c, dR, dC, depth int)
 	iterate = func(r, c, dR, dC, depth int) {
 		if r < 0 || c < 0 || r >= len(inputs) || c >= len(inputs[0]) {
@@ -71,17 +73,17 @@ func (d Day8) PuzzleB(inputs []string) any {
 		}
 
 		current := inputs[r][c]
-		for viewStack.Len() > 0 && viewStack.Top().height < current {
-			_ = viewStack.Pop()
+		for iteratorStack.Len() > 0 && iteratorStack.Peek().(Day8Tree).height < current {
+			_ = iteratorStack.Pop()
 		}
 
-		if viewStack.Len() == 0 {
+		if iteratorStack.Len() == 0 {
 			scoreGrid[r][c] *= depth
 		} else {
-			scoreGrid[r][c] *= depth - viewStack.Top().depth 
+			scoreGrid[r][c] *= depth - iteratorStack.Peek().(Day8Tree).depth
 		}
 
-		viewStack.Push(Day8Tree{
+		iteratorStack.Push(Day8Tree{
 			height: current,
 			depth:  depth,
 		})
@@ -90,16 +92,16 @@ func (d Day8) PuzzleB(inputs []string) any {
 	}
 
 	for i := 0; i < len(inputs); i++ {
-		viewStack.Clear()
+		iteratorStack = gollection.NewStack()
 		iterate(i, 0, 0, 1, 0) /* from left to right */
-		viewStack.Clear()
+		iteratorStack = gollection.NewStack()
 		iterate(i, len(inputs[0])-1, 0, -1, 0) /* from right to left */
 	}
 
 	for i := 0; i < len(inputs[0]); i++ {
-		viewStack.Clear()
+		iteratorStack = gollection.NewStack()
 		iterate(0, i, 1, 0, 0) /* from top to bottom */
-		viewStack.Clear()
+		iteratorStack = gollection.NewStack()
 		iterate(len(inputs)-1, i, -1, 0, 0) /* from bottom to top */
 	}
 
@@ -118,30 +120,4 @@ func (d Day8) PuzzleB(inputs []string) any {
 type Day8Tree struct {
 	height byte
 	depth  int
-}
-
-type Day8TreeStack struct {
-	stack []Day8Tree
-}
-
-func (s Day8TreeStack) Len() int {
-	return len(s.stack)
-}
-
-func (s Day8TreeStack) Top() Day8Tree {
-	return s.stack[s.Len()-1]
-}
-
-func (s *Day8TreeStack) Pop() Day8Tree {
-	t := s.Top()
-	s.stack = s.stack[:s.Len()-1]
-	return t
-}
-
-func (s *Day8TreeStack) Push(t Day8Tree) {
-	s.stack = append(s.stack, t)
-}
-
-func (s *Day8TreeStack) Clear() {
-	s.stack = []Day8Tree{}
 }
