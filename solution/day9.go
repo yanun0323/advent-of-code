@@ -95,10 +95,12 @@ func (d Day9) parseCommand(inputs []string) []model.Coord {
 	coords := []model.Coord{}
 	for _, input := range inputs {
 		if len(input) == 0 {
+			d.l.Warn("empty input row")
 			continue
 		}
 		ss := strings.Split(input, " ")
-		if len(ss) < 2 {
+		if len(ss) != 2 {
+			d.l.Warn("wrong input row format")
 			continue
 		}
 		num, err := strconv.Atoi(ss[1])
