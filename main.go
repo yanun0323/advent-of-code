@@ -2,18 +2,12 @@ package main
 
 import (
 	"context"
-	"io"
 	"main/repository"
 	"main/solution"
-	"net/http"
-	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 	"sync"
-	"time"
 
-	"github.com/spf13/viper"
 	"github.com/yanun0323/pkg/config"
 	"github.com/yanun0323/pkg/logs"
 )
@@ -44,30 +38,4 @@ func initConfig(cfgName string) error {
 		},
 	)
 	return err
-}
-
-func getPuzzleInput() ([]string, error) {
-	url := viper.GetString("url.prefix") + os.Getenv("DAY") + viper.GetString("url.suffix")
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Add("Cookie", "session="+viper.GetString("session"))
-	req.Header.Add("Content-Type", "application/json")
-
-	client := &http.Client{
-		Timeout: 15 * time.Second,
-	}
-	response, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer response.Body.Close()
-
-	buf, err := io.ReadAll(response.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	return strings.Split(string(buf), "\n"), nil
 }

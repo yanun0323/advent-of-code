@@ -11,7 +11,7 @@ type Day10 struct {
 
 func (s Solution) Day10(inputs []string) (any, any) {
 	d := Day10{s}
-	return d.PuzzleA(inputs), d.PuzzleB(inputs)
+	return d.PuzzleA(inputs), "\n" + d.PuzzleB(inputs).(string)
 }
 
 func (d Day10) PuzzleA(inputs []string) any {

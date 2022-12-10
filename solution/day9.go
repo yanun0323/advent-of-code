@@ -1,7 +1,6 @@
 package solution
 
 import (
-	"fmt"
 	"main/model"
 	"main/util"
 	"strconv"
@@ -20,75 +19,65 @@ func (s Solution) Day9(inputs []string) (any, any) {
 }
 
 func (d Day9) PuzzleA(inputs []string) any {
-	var head, tail, tailNext model.Coord
+	var head, tail model.Coord
 	tailBeen := map[model.Coord]bool{_startPoint: true}
-	commands := d.parseCommand(inputs)
+	movements := d.parseCommand(inputs)
 
-	isHeadNear := func() bool {
-		return util.Abs(head.X-tail.X) <= 1 && util.Abs(head.Y-tail.Y) <= 1
-	}
-
-	for _, cmd := range commands {
-		head.X += cmd.X
-		head.Y += cmd.Y
-		if isHeadNear() {
-			tailNext = head
+	for _, mv := range movements {
+		head.X += mv.X
+		head.Y += mv.Y
+		if d.isNear(head, tail) {
 			continue
 		}
-		tail = tailNext
+		tail = d.moveRope(head, tail)
 		tailBeen[tail] = true
-		tailNext = head
 	}
 
 	return len(tailBeen)
 }
 
-// TODO: Unsolved
+// BUG: Unsolved
 func (d Day9) PuzzleB(inputs []string) any {
-	var ropes, ropesNext [10]model.Coord
+	var ropes [10]model.Coord
+	tail := len(ropes) - 1
 	tailBeen := map[model.Coord]bool{_startPoint: true}
-	commands := d.parseCommand(inputs)
+	movements := d.parseCommand(inputs)
 
-	isPrevNear := func(i int) bool {
-		return util.Abs(ropes[i-1].X-ropes[i].X) <= 1 && util.Abs(ropes[i-1].Y-ropes[i].Y) <= 1
-	}
-	max := _startPoint
-	min := _startPoint
-
-	for _, cmd := range commands {
-		ropes[0].X += cmd.X
-		ropes[0].Y += cmd.Y
-		max.X, max.Y = util.Max(ropes[0].X, max.X), util.Max(ropes[0].Y, max.Y)
-		min.X, min.Y = util.Min(ropes[0].X, min.X), util.Min(ropes[0].Y, min.Y)
-		for i := 1; i < len(ropes); i++ {
-			if isPrevNear(i) {
-				ropesNext[i] = ropes[i-1]
-				break
+	for _, mv := range movements {
+		ropes[0].X += mv.X
+		ropes[0].Y += mv.Y
+		for i := 1; i <= tail; i++ {
+			if d.isNear(ropes[i-1], ropes[i]) {
+				continue
 			}
-			ropes[i] = ropesNext[i]
-			if i == len(ropes)-1 {
-				tailBeen[ropes[i]] = true
-			}
-			ropesNext[i] = ropes[i-1]
+			ropes[i] = d.moveRope(ropes[i-1], ropes[i])
 		}
+		tailBeen[ropes[tail]] = true
 	}
-	c := 0
-	fmt.Println("max:", max.X, max.Y)
-	fmt.Println("min:", min.X, min.Y)
-	for y := max.Y; y >= min.Y; y-- {
-		for x := min.X; x < max.X; x++ {
-			char := "."
-			if tailBeen[model.Coord{X: x, Y: y}] {
-				char = "#"
-				c++
-			}
-			fmt.Print(string(char))
-		}
-		fmt.Println("")
-	}
-	fmt.Println("count:", c)
 
 	return len(tailBeen)
+}
+
+func (d Day9) isNear(head, tail model.Coord) bool {
+	return util.Abs(head.X-tail.X) <= 1 && util.Abs(head.Y-tail.Y) <= 1
+}
+
+func (d Day9) moveRope(target, current model.Coord) model.Coord {
+	if util.Abs(target.X-current.X) >= 2 {
+		current.X = (target.X + current.X) / 2
+		current.Y = target.Y
+		return current
+	}
+
+	if util.Abs(target.Y-current.Y) >= 2 {
+		current.X = target.X
+		current.Y = (target.Y + current.Y) / 2
+		return current
+	}
+
+	current.X = (target.X + current.X) / 2
+	current.Y = (target.Y + current.Y) / 2
+	return current
 }
 
 func (d Day9) parseCommand(inputs []string) []model.Coord {
